@@ -5,7 +5,7 @@ import envCompatible from "vite-plugin-env-compatible";
 import path from "path";
 
 export default defineConfig({
-  envPrefix: "REACT_APP_",
+  envPrefix: "VITE_",
   build: {
     outDir: "dist"
   },
