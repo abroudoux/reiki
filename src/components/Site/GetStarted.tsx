@@ -30,7 +30,7 @@ export default function GetStarted() {
               </Link>
             </Button>
             <Button>
-              <Link to={"/seances"} className="flex items-center gap-2">
+              <Link to={"/contact"} className="flex items-center gap-2">
                 Réserver <MoveRight className="w-4 h-4" />
               </Link>
             </Button>

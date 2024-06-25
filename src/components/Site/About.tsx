@@ -1,9 +1,8 @@
 import { Heart, Users, Shell, Activity, Brain, Ear } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 
 export default function About() {
   return (
-    <section className="w-full py-20 lg:py-40">
+    <section className="w-full py-20 lg:py-40" id="about">
       <div className="container mx-auto">
         <div className="flex gap-4 py-20 lg:py-40 flex-col items-start">
           <div className="flex gap-2 flex-col">

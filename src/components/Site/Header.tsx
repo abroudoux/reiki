@@ -47,7 +47,7 @@ export default function Header() {
             <img src={"/logo/logo.jpg"} alt="" className="h-24 w-auto" />
           </Link>
         </div>
-        <Link className="flex justify-end w-full gap-4" to={"/seances"}>
+        <Link className="flex justify-end w-full gap-4" to={"/contact"}>
           <Button>Réserver</Button>
         </Link>
       </div>
