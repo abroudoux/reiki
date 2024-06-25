@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import useStore from "@/lib/store";
 import { login } from "@/utils/auth";
@@ -51,7 +51,7 @@ export default function Auth() {
       navigate("/admin/app");
       toast({
         variant: "default",
-        description: "Vous êtes désormais connectés."
+        description: "Vous êtes désormais connecté."
       });
     } else {
       toast({
@@ -64,7 +64,10 @@ export default function Auth() {
   };
 
   return (
-    <section className="w-screen h-screen flex-col-center-center">
+    <section className="w-screen h-screen flex-col-center-center gap-12">
+      <Link className="font-semibold" to={"/"}>
+        <img src={"/logo/logo.jpg"} alt="Angers Reiki logo" className="h-36 w-auto" />
+      </Link>
       <form action="POST" onSubmit={loginUser}>
         <Card className="w-full max-w-sm">
           <CardHeader>

@@ -1,7 +1,9 @@
-import { useState } from "react";
-import { CalendarIcon, Check, MoveRight, PhoneCall } from "lucide-react";
+import { useState, useEffect } from "react";
+import { CalendarIcon, Check, MoveRight } from "lucide-react";
 import { format } from "date-fns";
 
+import useStore from "@/lib/store";
+import { createSession } from "@/utils/sessions";
 import { cn } from "@/lib/utils";
 
 import { Badge } from "@/components/ui/badge";
@@ -10,9 +12,63 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function Form() {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [date, setDate] = useState<Date | undefined>(new Date());
+  const { setIsLoading, sessions, addSession } = useStore();
+  const { toast } = useToast();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    switch (e.target.id) {
+      case "firstName":
+        setFirstName(e.target.value);
+        break;
+      case "lastName":
+        setLastName(e.target.value);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const sendForm = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    if (!date) {
+      toast({
+        variant: "destructive",
+        description: "Veuillez sélectionner une date."
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    const isMessageSent = await createSession(firstName, lastName, date);
+
+    if (isMessageSent) {
+      const newSession = { firstName, lastName, date };
+      addSession(newSession);
+      toast({
+        variant: "default",
+        description: `Votre message a été envoyé avec succès. Date du rendez-vous : ${format(date, "PPP")}. Nous vous répondrons dans les plus brefs délais.`
+      });
+    } else {
+      toast({
+        variant: "destructive",
+        description: "Une erreur est survenue. Veuillez réessayer."
+      });
+    }
+
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    console.log("Updated sessions:", sessions);
+  }, [sessions]);
 
   return (
     <section className="w-full py-20 lg:py-40">
@@ -36,7 +92,7 @@ export default function Form() {
             <div className="flex flex-row gap-6 items-start text-left">
               <Check className="w-4 h-4 mt-2 text-primary" />
               <div className="flex flex-col gap-1">
-                <p>Des soins adpatés à tous</p>
+                <p>Des soins adaptés à tous</p>
               </div>
             </div>
             <div className="flex flex-row gap-6 items-start text-left">
@@ -53,11 +109,11 @@ export default function Form() {
             </div>
           </div>
 
-          <div className="justify-center flex items-center">
+          <form className="justify-center flex items-center" onSubmit={sendForm}>
             <div className="rounded-md max-w-sm flex flex-col border p-8 gap-4">
               <p>Prendre rendez-vous</p>
               <div className="grid w-full max-w-sm items-center gap-1">
-                <Label htmlFor="picture">Date</Label>
+                <Label htmlFor="date">Date</Label>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
@@ -76,22 +132,24 @@ export default function Form() {
                 </Popover>
               </div>
               <div className="grid w-full max-w-sm items-center gap-1">
-                <Label htmlFor="firstname">Prénom</Label>
-                <Input id="firstname" type="text" />
+                <Label htmlFor="firstName">Prénom</Label>
+                <Input id="firstName" type="text" required onChange={handleChange} />
               </div>
               <div className="grid w-full max-w-sm items-center gap-1">
-                <Label htmlFor="lastname">Nom</Label>
-                <Input id="lastname" type="text" />
+                <Label htmlFor="lastName">Nom</Label>
+                <Input id="lastName" type="text" required onChange={handleChange} />
               </div>
               <div className="grid w-full max-w-sm items-center gap-1">
-                <Label htmlFor="message">Message</Label>
+                <Label htmlFor="message">
+                  Message <span className="text-muted-foreground">(optionnel)</span>
+                </Label>
                 <Input id="message" type="file" />
               </div>
-              <Button className="gap-4 w-full">
+              <Button type="submit" className="gap-4 w-full">
                 Valider <MoveRight className="w-4 h-4" />
               </Button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </section>
