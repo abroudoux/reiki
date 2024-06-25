@@ -14,7 +14,29 @@ interface Store {
 const useStore = create<Store>((set) => ({
   token: false,
   isLoading: false,
-  sessions: [],
+  sessions: [
+    {
+      id: "1",
+      firstName: "John",
+      lastName: "Doe",
+      date: "2021-09-01",
+      status: "en attente"
+    },
+    {
+      id: "2",
+      firstName: "John",
+      lastName: "Test",
+      date: "2021-09-02",
+      status: "annulé"
+    },
+    {
+      id: "3",
+      firstName: "John",
+      lastName: "Doe",
+      date: "2021-09-03",
+      status: "validé"
+    }
+  ],
   signIn: () => {
     set({ token: true });
     localStorage.setItem("token", JSON.stringify(true));

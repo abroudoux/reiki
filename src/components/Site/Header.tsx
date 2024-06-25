@@ -15,10 +15,6 @@ export default function Header() {
       href: "/"
     },
     {
-      title: "Séances",
-      href: "/seances"
-    },
-    {
       title: "Contact",
       href: "/contact"
     }

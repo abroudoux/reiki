@@ -24,10 +24,8 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -116,12 +114,8 @@ export const columns: ColumnDef<Session>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(session.id || "")}>
-              Copy session ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View session details</DropdownMenuItem>
-            <DropdownMenuItem>Cancel session</DropdownMenuItem>
+            <DropdownMenuItem>Voir les détails de la séance</DropdownMenuItem>
+            <DropdownMenuItem>Annuler la séance</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
@@ -158,12 +152,6 @@ export default function TableSessions() {
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
-        <Input
-          placeholder="Filter by first name..."
-          value={(table.getColumn("firstName")?.getFilterValue() as string) ?? ""}
-          onChange={(event) => table.getColumn("firstName")?.setFilterValue(event.target.value)}
-          className="max-w-sm"
-        />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
