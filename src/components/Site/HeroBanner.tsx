@@ -25,15 +25,16 @@ export default function HeroBanner() {
               </p>
             </div>
             <div className="flex flex-row gap-4 mt-4">
-              <Link to={"#about"}>
+              <a href={"#about"}>
                 <Button size="lg" className="gap-4" variant="outline">
                   À propos <BadgeInfo className="w-4 h-4" />
                 </Button>
+              </a>
+              <Link to={"/contact"}>
+                <Button size="lg" className="gap-4">
+                  Réserver une séance <MoveRight className="w-4 h-4" />
+                </Button>
               </Link>
-              <Link to={"/contact"}></Link>
-              <Button size="lg" className="gap-4">
-                Réserver une séance <MoveRight className="w-4 h-4" />
-              </Button>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-8">
