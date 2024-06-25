@@ -1,3 +1,12 @@
+import Header from "@/components/Site/Header";
+
 export default function Sessions() {
-  return <h1>sessions</h1>;
+  return (
+    <>
+      <Header />
+      <main>
+        <h1>Sessions</h1>
+      </main>
+    </>
+  );
 }

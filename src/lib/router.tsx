@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import Home from "@/pages/Home";
-import About from "@/pages/About";
 import Sessions from "@/pages/Sessions";
 import Contact from "@/pages/Contact";
 import Auth from "@/pages/Auth";
@@ -12,11 +11,6 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
-    errorElement: <PageNotFound />
-  },
-  {
-    path: "/a-propos",
-    element: <About />,
     errorElement: <PageNotFound />
   },
   {

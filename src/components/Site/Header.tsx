@@ -15,10 +15,6 @@ export default function Header() {
       href: "/"
     },
     {
-      title: "À propos",
-      href: "/a-propos"
-    },
-    {
       title: "Séances",
       href: "/seances"
     },

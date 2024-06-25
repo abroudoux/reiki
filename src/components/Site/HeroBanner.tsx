@@ -39,21 +39,21 @@ export default function HeroBanner() {
           <div className="grid grid-cols-2 gap-8">
             <div className="bg-muted rounded-md aspect-square">
               <img
-                src={"/img/illustration-1.jpg"}
+                src={"/img/img-1.jpg"}
                 alt=""
                 className="w-auto h-full object-cover rounded-md"
               />
             </div>
             <div className="bg-muted rounded-md row-span-2">
               <img
-                src={"/img/illustration-2.jpg"}
+                src={"/img/img-2.jpg"}
                 alt=""
                 className="w-auto h-full object-cover rounded-md"
               />
             </div>
             <div className="bg-muted rounded-md aspect-square">
               <img
-                src={"/img/illustration-5.jpg"}
+                src={"/img/img-5.jpg"}
                 alt=""
                 className="w-auto h-full object-cover rounded-md"
               />
