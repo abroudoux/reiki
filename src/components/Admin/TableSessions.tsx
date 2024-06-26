@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState, useEffect } from "react";
 import { CaretSortIcon, ChevronDownIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
 import {
   ColumnDef,
@@ -13,7 +13,6 @@ import {
   useReactTable
 } from "@tanstack/react-table";
 
-import useStore from "@/lib/store";
 import { Session } from "@/utils/types";
 
 import { Button } from "@/components/ui/button";
@@ -58,11 +57,6 @@ export const columns: ColumnDef<Session>[] = [
     enableHiding: false
   },
   {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("status")}</div>
-  },
-  {
     accessorKey: "firstName",
     header: ({ column }) => {
       return (
@@ -89,6 +83,20 @@ export const columns: ColumnDef<Session>[] = [
       );
     },
     cell: ({ row }) => <div>{row.getValue("lastName")}</div>
+  },
+  {
+    accessorKey: "email",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          Email
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div>{row.getValue("email")}</div>
   },
   {
     accessorKey: "date",
@@ -124,14 +132,21 @@ export const columns: ColumnDef<Session>[] = [
 ];
 
 export default function TableSessions() {
-  const { sessions } = useStore();
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = React.useState({});
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = useState({});
+  const [data, setData] = useState<Session[]>([]);
+
+  const fetchSessionsData = async () => {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/sessions`);
+    const data = await response.json();
+    console.log(data);
+    setData(data);
+  };
 
   const table = useReactTable({
-    data: sessions,
+    data: data,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -148,6 +163,10 @@ export default function TableSessions() {
       rowSelection
     }
   });
+
+  useEffect(() => {
+    fetchSessionsData();
+  }, []);
 
   return (
     <div className="w-full">

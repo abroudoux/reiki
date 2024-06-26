@@ -15,8 +15,8 @@ export default function Sessions() {
             <div className="flex items-center">
               <TabsList>
                 <TabsTrigger value="all">All</TabsTrigger>
-                <TabsTrigger value="active">Active</TabsTrigger>
-                <TabsTrigger value="draft">Draft</TabsTrigger>
+                {/* <TabsTrigger value="active">Active</TabsTrigger>
+                <TabsTrigger value="draft">Draft</TabsTrigger> */}
               </TabsList>
               <div className="ml-auto flex items-center gap-2">
                 <Button className="gap-1">

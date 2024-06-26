@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { CalendarIcon, Check, MoveRight } from "lucide-react";
 import { format } from "date-fns";
 
@@ -17,8 +17,9 @@ import { useToast } from "@/components/ui/use-toast";
 export default function FormSession() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
   const [date, setDate] = useState<Date | undefined>(new Date());
-  const { setIsLoading, sessions, addSession } = useStore();
+  const { setIsLoading } = useStore();
   const { toast } = useToast();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,6 +29,9 @@ export default function FormSession() {
         break;
       case "lastName":
         setLastName(e.target.value);
+        break;
+      case "email":
+        setEmail(e.target.value);
         break;
       default:
         break;
@@ -47,10 +51,9 @@ export default function FormSession() {
       return;
     }
 
-    const isMessageSent = await createSession(firstName, lastName, date);
+    const sessionCreated = await createSession(firstName, lastName, email, date);
 
-    if (isMessageSent) {
-      const newSession = { firstName, lastName, date };
+    if (sessionCreated) {
       toast({
         variant: "default",
         description: `Votre message a été envoyé avec succès. Date du rendez-vous : ${format(date, "PPP")}. Nous vous répondrons dans les plus brefs délais.`
@@ -64,10 +67,6 @@ export default function FormSession() {
 
     setIsLoading(false);
   };
-
-  useEffect(() => {
-    console.log("Updated sessions:", sessions);
-  }, [sessions]);
 
   return (
     <section className="w-full py-20 lg:py-40">
@@ -139,10 +138,8 @@ export default function FormSession() {
                 <Input id="lastName" type="text" required onChange={handleChange} />
               </div>
               <div className="grid w-full max-w-sm items-center gap-1">
-                <Label htmlFor="message">
-                  Message <span className="text-muted-foreground">(optionnel)</span>
-                </Label>
-                <Input id="message" type="file" />
+                <Label htmlFor="email">Email</Label>
+                <Input id="email" type="text" required onChange={handleChange} />
               </div>
               <Button type="submit" className="gap-4 w-full">
                 Valider <MoveRight className="w-4 h-4" />

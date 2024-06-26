@@ -2,6 +2,6 @@ export type Session = {
   id?: string;
   firstName: string;
   lastName: string;
+  email: string;
   date: string;
-  status: "en attente" | "validé" | "annulé";
 };

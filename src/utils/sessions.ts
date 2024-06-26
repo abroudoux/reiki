@@ -1,21 +1,33 @@
-export const createSession = async (firstName: string, lastName: string, date: Date) => {
-  const today = new Date();
+import { formatDate } from "@/utils/date";
 
-  if (!validateSession(firstName, lastName, date, today)) {
+export const createSession = async (
+  firstName: string,
+  lastName: string,
+  email: string,
+  date: Date
+) => {
+  try {
+    const dateString = formatDate(date);
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/sessions`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ firstName, lastName, email, date })
+    });
+    return response.ok;
+  } catch (error) {
+    console.error(error);
     return false;
   }
-
-  return true;
 };
 
-const validateSession = (firstName: string, lastName: string, date: Date, today: Date) => {
-  if (!firstName || !lastName || !date) {
-    return false;
+export const fetchSessions = async () => {
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/sessions`);
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    return;
   }
-
-  if (date < today) {
-    return false;
-  }
-
-  return true;
 };

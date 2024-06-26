@@ -1,1 +1,1 @@
-# reiki
+# reiki-client

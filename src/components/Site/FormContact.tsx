@@ -36,6 +36,28 @@ export default function Form() {
     e.preventDefault();
     setIsLoading(true);
 
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/messages`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        firstName,
+        lastName,
+        mail,
+        message: e.currentTarget.message.value
+      })
+    });
+
+    if (!res.ok) {
+      toast({
+        variant: "destructive",
+        description: `Une erreur est survenue lors de l'envoi de votre message. Veuillez réessayer.`
+      });
+      setIsLoading(false);
+      return;
+    }
+
     toast({
       variant: "default",
       description: `Votre message a été envoyé avec succès. Nous vous répondrons dans les plus brefs délais.`
