@@ -56,7 +56,7 @@ export default function FormSession() {
     if (sessionCreated) {
       toast({
         variant: "default",
-        description: `Votre message a été envoyé avec succès. Date du rendez-vous : ${format(date, "PPP")}. Nous vous répondrons dans les plus brefs délais.`
+        description: `Votre demande de rendez-vous a été envoyé avec succès. Nous vous répondrons dans les plus brefs délais.`
       });
     } else {
       toast({
@@ -70,7 +70,7 @@ export default function FormSession() {
 
   return (
     <section className="w-full py-20 lg:py-40">
-      <div className="container max-w-6xl mx-auto">
+      <div className="container max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-10">
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-4">
@@ -108,16 +108,16 @@ export default function FormSession() {
           </div>
 
           <form className="justify-center flex items-center" onSubmit={sendForm}>
-            <div className="rounded-md max-w-sm flex flex-col border p-8 gap-4">
+            <div className="rounded-md w-3/4 flex flex-col border p-8 gap-4">
               <p>Prendre rendez-vous</p>
-              <div className="grid w-full max-w-sm items-center gap-1">
+              <div className="grid w-full items-center gap-1">
                 <Label htmlFor="date">Date</Label>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
                       variant={"outline"}
                       className={cn(
-                        "w-full max-w-sm justify-start text-left font-normal",
+                        "w-full justify-start text-left font-normal",
                         !date && "text-muted-foreground"
                       )}>
                       <CalendarIcon className="mr-2 h-4 w-4" />
@@ -125,19 +125,25 @@ export default function FormSession() {
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0">
-                    <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
+                    <Calendar
+                      mode="single"
+                      selected={date}
+                      onSelect={setDate}
+                      initialFocus
+                      required
+                    />
                   </PopoverContent>
                 </Popover>
               </div>
-              <div className="grid w-full max-w-sm items-center gap-1">
+              <div className="grid w-full items-center gap-1">
                 <Label htmlFor="firstName">Prénom</Label>
                 <Input id="firstName" type="text" required onChange={handleChange} />
               </div>
-              <div className="grid w-full max-w-sm items-center gap-1">
+              <div className="grid w-full items-center gap-1">
                 <Label htmlFor="lastName">Nom</Label>
                 <Input id="lastName" type="text" required onChange={handleChange} />
               </div>
-              <div className="grid w-full max-w-sm items-center gap-1">
+              <div className="grid w-full items-center gap-1">
                 <Label htmlFor="email">Email</Label>
                 <Input id="email" type="text" required onChange={handleChange} />
               </div>

@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 import useStore from "@/lib/store";
 
-import Sessions from "@/components/Admin/Sessions";
+import SessionsSection from "@/components/Admin/SessionsSection";
 
 export default function Dashboard() {
   const { token, sessions } = useStore();
@@ -12,7 +12,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <Sessions />
+      <SessionsSection />
     </>
   );
 }

@@ -12,6 +12,7 @@ import {
   getSortedRowModel,
   useReactTable
 } from "@tanstack/react-table";
+import { fetchSessions } from "@/utils/sessions";
 
 import { Session } from "@/utils/types";
 
@@ -139,11 +140,14 @@ export default function TableSessions() {
   const [data, setData] = useState<Session[]>([]);
 
   const fetchSessionsData = async () => {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/sessions`);
-    const data = await response.json();
-    console.log(data);
+    const data = await fetchSessions();
     setData(data);
   };
+
+  useEffect(() => {
+    fetchSessionsData();
+    console.log(data);
+  }, []);
 
   const table = useReactTable({
     data: data,
@@ -163,10 +167,6 @@ export default function TableSessions() {
       rowSelection
     }
   });
-
-  useEffect(() => {
-    fetchSessionsData();
-  }, []);
 
   return (
     <div className="w-full">

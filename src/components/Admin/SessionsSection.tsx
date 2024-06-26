@@ -2,11 +2,13 @@ import { Link } from "react-router-dom";
 import { PlusCircle } from "lucide-react";
 
 import TableSessions from "@/components/Admin/TableSessions";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import DialogCreateSession from "@/components/Admin/DialogCreateSession";
 
-export default function Sessions() {
+export default function SessionsSection() {
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
       <div className="flex flex-col sm:gap-4 sm:py-4">
@@ -19,12 +21,17 @@ export default function Sessions() {
                 <TabsTrigger value="draft">Draft</TabsTrigger> */}
               </TabsList>
               <div className="ml-auto flex items-center gap-2">
-                <Button className="gap-1">
-                  <PlusCircle className="h-3.5 w-3.5" />
-                  <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                    Ajouter une séance
-                  </span>
-                </Button>
+                <Dialog>
+                  <DialogTrigger>
+                    <Button className="gap-1">
+                      <PlusCircle className="h-3.5 w-3.5" />
+                      <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                        Ajouter une séance
+                      </span>
+                    </Button>
+                  </DialogTrigger>
+                  <DialogCreateSession />
+                </Dialog>
               </div>
             </div>
             <TabsContent value="all">
