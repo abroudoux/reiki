@@ -1,6 +1,6 @@
 import Header from "@/components/Site/Header";
+import FormSession from "@/components/Site/FormSession";
 import Pricing from "@/components/Site/Princing";
-import GetStarted from "@/components/Site/GetStarted";
 import FAQ from "@/components/Site/FAQ";
 import Footer from "@/components/Site/Footer";
 
@@ -9,8 +9,8 @@ export default function Sessions() {
     <>
       <Header />
       <main>
+        <FormSession />
         <Pricing />
-        <GetStarted />
       </main>
       <aside>
         <FAQ />

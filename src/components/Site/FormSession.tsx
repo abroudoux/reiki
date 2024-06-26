@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 
-export default function Form() {
+export default function FormSession() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [date, setDate] = useState<Date | undefined>(new Date());
@@ -51,7 +51,6 @@ export default function Form() {
 
     if (isMessageSent) {
       const newSession = { firstName, lastName, date };
-      addSession(newSession);
       toast({
         variant: "default",
         description: `Votre message a été envoyé avec succès. Date du rendez-vous : ${format(date, "PPP")}. Nous vous répondrons dans les plus brefs délais.`
