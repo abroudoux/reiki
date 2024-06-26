@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { PlusCircle } from "lucide-react";
 
 import TableSessions from "@/components/Admin/TableSessions";
+import TableMessages from "@/components/Admin/TableMessages";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
@@ -13,12 +14,12 @@ export default function SessionsSection() {
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
       <div className="flex flex-col sm:gap-4 sm:py-4">
         <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
-          <Tabs defaultValue="all">
+          <Tabs defaultValue="sessions">
             <div className="flex items-center">
               <TabsList>
-                <TabsTrigger value="all">All</TabsTrigger>
-                {/* <TabsTrigger value="active">Active</TabsTrigger>
-                <TabsTrigger value="draft">Draft</TabsTrigger> */}
+                <TabsTrigger value="sessions">Séances</TabsTrigger>
+                <TabsTrigger value="messages">Messages</TabsTrigger>
+                {/* <TabsTrigger value="draft">Draft</TabsTrigger> */}
               </TabsList>
               <div className="ml-auto flex items-center gap-2">
                 <Dialog>
@@ -34,13 +35,23 @@ export default function SessionsSection() {
                 </Dialog>
               </div>
             </div>
-            <TabsContent value="all">
+            <TabsContent value="sessions">
               <Card x-chunk="dashboard-06-chunk-0">
                 <CardHeader>
                   <CardTitle>Séances</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <TableSessions />
+                </CardContent>
+              </Card>
+            </TabsContent>
+            <TabsContent value="messages">
+              <Card x-chunk="dashboard-06-chunk-0">
+                <CardHeader>
+                  <CardTitle>Messages</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <TableMessages />
                 </CardContent>
               </Card>
             </TabsContent>

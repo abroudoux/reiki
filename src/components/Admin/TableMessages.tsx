@@ -13,7 +13,7 @@ import {
   useReactTable
 } from "@tanstack/react-table";
 
-import { fetchSessions } from "@/utils/sessions";
+import { fetchMessages } from "@/utils/messages";
 import { Session } from "@/utils/types";
 
 import { Button } from "@/components/ui/button";
@@ -100,12 +100,18 @@ export const columns: ColumnDef<Session>[] = [
     cell: ({ row }) => <div>{row.getValue("email")}</div>
   },
   {
-    accessorKey: "date",
-    header: () => <div className="text-right">Date</div>,
-    cell: ({ row }) => {
-      const date = new Date(row.getValue("date"));
-      return <div className="text-right font-medium">{date.toLocaleDateString()}</div>;
-    }
+    accessorKey: "message",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          Message
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div>{row.getValue("message")}</div>
   },
   {
     id: "actions",
@@ -123,8 +129,8 @@ export const columns: ColumnDef<Session>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>Voir les détails de la séance</DropdownMenuItem>
-            <DropdownMenuItem>Annuler la séance</DropdownMenuItem>
+            <DropdownMenuItem>Voir le détail du message</DropdownMenuItem>
+            <DropdownMenuItem>Supprimer le message</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
@@ -132,16 +138,17 @@ export const columns: ColumnDef<Session>[] = [
   }
 ];
 
-export default function TableSessions() {
+export default function TableMessages() {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
   const [data, setData] = useState<Session[]>([]);
 
-  const fetchSessionsData = async () => {
-    const data = await fetchSessions();
+  const fetchMessagesData = async () => {
+    const data = await fetchMessages();
     setData(data);
+    console.log("Fetched data: ", data);
   };
 
   const table = useReactTable({
