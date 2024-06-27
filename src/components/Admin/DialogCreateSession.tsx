@@ -76,56 +76,58 @@ export default function DialogCreateSession() {
 
   return (
     <DialogContent className="sm:max-w-[425px]">
-      <DialogHeader>
-        <DialogTitle>Ajouter une séance</DialogTitle>
-        <DialogDescription>
-          Make changes to your profile here. Click save when you're done.
-        </DialogDescription>
-      </DialogHeader>
-      <form className="grid gap-4 py-4" onSubmit={sendForm}>
-        <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="date" className="text-right">
-            Date
-          </Label>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant={"outline"}
-                className={cn(
-                  "w-full justify-start text-left font-normal",
-                  !date && "text-muted-foreground"
-                )}>
-                <CalendarIcon className="mr-2 h-4 w-4" />
-                {date ? format(date, "PPP") : <span>Sélectionner une date</span>}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0">
-              <Calendar mode="single" selected={date} onSelect={setDate} initialFocus required />
-            </PopoverContent>
-          </Popover>
+      <form onSubmit={sendForm}>
+        <DialogHeader>
+          <DialogTitle>Ajouter une séance</DialogTitle>
+          <DialogDescription>
+            Make changes to your profile here. Click save when you're done.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="date" className="text-right">
+              Date
+            </Label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant={"outline"}
+                  className={cn(
+                    "w-full justify-start text-left font-normal",
+                    !date && "text-muted-foreground"
+                  )}>
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {date ? format(date, "PPP") : <span>Sélectionner une date</span>}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0">
+                <Calendar mode="single" selected={date} onSelect={setDate} initialFocus required />
+              </PopoverContent>
+            </Popover>
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">
+              Nom
+            </Label>
+            <Input id="name" className="col-span-3" required onChange={handleChange} />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="username" className="text-right">
+              Prénom
+            </Label>
+            <Input id="username" className="col-span-3" required onChange={handleChange} />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="email" className="text-right">
+              Email
+            </Label>
+            <Input id="email" className="col-span-3" required onChange={handleChange} />
+          </div>
         </div>
-        <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="name" className="text-right">
-            Nom
-          </Label>
-          <Input id="name" className="col-span-3" required onChange={handleChange} />
-        </div>
-        <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="username" className="text-right">
-            Prénom
-          </Label>
-          <Input id="username" className="col-span-3" required onChange={handleChange} />
-        </div>
-        <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="email" className="text-right">
-            Email
-          </Label>
-          <Input id="email" className="col-span-3" required onChange={handleChange} />
-        </div>
+        <DialogFooter>
+          <Button type="submit">Save changes</Button>
+        </DialogFooter>
       </form>
-      <DialogFooter>
-        <Button type="submit">Save changes</Button>
-      </DialogFooter>
     </DialogContent>
   );
 }

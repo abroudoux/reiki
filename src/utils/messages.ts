@@ -1,10 +1,14 @@
+import { formatDate } from "@/utils/date";
+
 export const createMessage = async (
   firstName: string,
   lastName: string,
-  mail: string,
-  message: string
+  email: string,
+  message: string,
+  today: Date
 ) => {
   try {
+    const date: string = formatDate(today);
     const response = await fetch(`${import.meta.env.VITE_API_URL}/messages`, {
       method: "POST",
       headers: {
@@ -13,8 +17,9 @@ export const createMessage = async (
       body: JSON.stringify({
         firstName,
         lastName,
-        mail,
-        message
+        email,
+        message,
+        date
       })
     });
     return response.ok;

@@ -2,8 +2,8 @@ import { useState } from "react";
 import { CalendarIcon, Check, MoveRight } from "lucide-react";
 import { format } from "date-fns";
 
-import useStore from "@/lib/store";
 import { createSession } from "@/utils/sessions";
+import useStore from "@/lib/store";
 import { cn } from "@/lib/utils";
 
 import { Badge } from "@/components/ui/badge";
@@ -19,7 +19,7 @@ export default function FormSession() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [date, setDate] = useState<Date | undefined>(new Date());
-  const { setIsLoading } = useStore();
+  const { isLoading, setIsLoading } = useStore();
   const { toast } = useToast();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

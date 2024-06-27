@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Check, MoveRight } from "lucide-react";
 
 import useStore from "@/lib/store";
+import { createMessage } from "@/utils/messages";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -9,11 +10,13 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
+import { formatDate } from "@/utils/date";
 
 export default function Form() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [mail, setMail] = useState("");
+  const [message, setMessage] = useState("");
   const { setIsLoading } = useStore();
   const { toast } = useToast();
 
@@ -27,6 +30,10 @@ export default function Form() {
         break;
       case "mail":
         setMail(e.target.value);
+        break;
+      case "message":
+        setMessage(e.target.value);
+        break;
       default:
         break;
     }
@@ -36,32 +43,31 @@ export default function Form() {
     e.preventDefault();
     setIsLoading(true);
 
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/messages`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        firstName,
-        lastName,
-        mail,
-        message: e.currentTarget.message.value
-      })
-    });
+    const date = new Date();
+    // const formattedDate: string = formatDate(date);
+    const messgaeIsSent = await createMessage(firstName, lastName, mail, message, date);
 
-    if (!res.ok) {
+    // console.log(
+    //   firstName,
+    //   lastName,
+    //   mail,
+    //   message,
+    //   formattedDate,
+    //   typeof formattedDate,
+    //   messgaeIsSent
+    // );
+
+    if (messgaeIsSent) {
+      toast({
+        variant: "default",
+        description: `Votre message a été envoyé avec succès. Nous vous répondrons dans les plus brefs délais.`
+      });
+    } else {
       toast({
         variant: "destructive",
-        description: `Une erreur est survenue lors de l'envoi de votre message. Veuillez réessayer.`
+        description: "Une erreur est survenue lors de l'envoi de votre message. Veuillez réessayer."
       });
-      setIsLoading(false);
-      return;
     }
-
-    toast({
-      variant: "default",
-      description: `Votre message a été envoyé avec succès. Nous vous répondrons dans les plus brefs délais.`
-    });
 
     setIsLoading(false);
   };
