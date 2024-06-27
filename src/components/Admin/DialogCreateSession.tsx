@@ -19,6 +19,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Icons } from "@/components/ui/icons";
 
 export default function DialogCreateSession() {
   const [firstName, setFirstName] = useState("");
@@ -125,7 +126,10 @@ export default function DialogCreateSession() {
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit">Save changes</Button>
+          <Button type="submit" disabled={isLoading}>
+            {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
+            Save changes
+          </Button>
         </DialogFooter>
       </form>
     </DialogContent>

@@ -10,6 +10,16 @@ export const getSessions = async () => {
   }
 };
 
+export const getSession = async (id: string) => {
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/sessions/${id}`);
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    return;
+  }
+};
+
 export const createSession = async (
   firstName: string,
   lastName: string,

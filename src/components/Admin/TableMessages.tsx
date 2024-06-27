@@ -14,7 +14,7 @@ import {
 } from "@tanstack/react-table";
 
 import { fetchMessages } from "@/utils/messages";
-import { Session } from "@/utils/types";
+import { Message } from "@/utils/types";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -35,7 +35,7 @@ import {
   TableRow
 } from "@/components/ui/table";
 
-export const columns: ColumnDef<Session>[] = [
+export const columns: ColumnDef<Message>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -143,7 +143,7 @@ export default function TableMessages() {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
-  const [data, setData] = useState<Session[]>([]);
+  const [data, setData] = useState<Message[]>([]);
 
   const getMessages = async () => {
     const data = await fetchMessages();

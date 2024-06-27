@@ -16,6 +16,7 @@ import {
 import { getSessions, deleteSession } from "@/utils/sessions";
 import { Session } from "@/utils/types";
 
+import InfosSessionsDialog from "@/components/Admin/InfosSessionsDialog";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -34,6 +35,7 @@ import {
   TableHeader,
   TableRow
 } from "@/components/ui/table";
+import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 
 export const columns: ColumnDef<Session>[] = [
   {
@@ -112,6 +114,7 @@ export const columns: ColumnDef<Session>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const session = row.original;
+      const [isOpen, setIsOpen] = useState(false);
 
       return (
         <DropdownMenu>
@@ -123,7 +126,18 @@ export const columns: ColumnDef<Session>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>Voir les détails de la séance</DropdownMenuItem>
+            <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+              <AlertDialogTrigger asChild>
+                <DropdownMenuItem
+                  onSelect={(event) => {
+                    event.preventDefault();
+                    setIsOpen(true);
+                  }}>
+                  Voir les détails de la séance
+                </DropdownMenuItem>
+              </AlertDialogTrigger>
+              {session.id && <InfosSessionsDialog sessionId={session.id} />}
+            </AlertDialog>
             <DropdownMenuItem>Annuler la séance</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -141,7 +155,6 @@ export default function TableSessions() {
 
   const fetchSessionsData = async () => {
     const data = await getSessions();
-    console.log(data);
     setData(data.sessions);
   };
 
