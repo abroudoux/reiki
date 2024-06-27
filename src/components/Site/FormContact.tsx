@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Check, MoveRight } from "lucide-react";
 
 import useStore from "@/lib/store";
-import { createMessage } from "@/utils/messages";
+import { postMessage } from "@/utils/messages";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -10,7 +10,6 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
-import { formatDate } from "@/utils/date";
 
 export default function Form() {
   const [firstName, setFirstName] = useState("");
@@ -39,23 +38,12 @@ export default function Form() {
     }
   };
 
-  const sendForm = async (e: React.FormEvent<HTMLFormElement>) => {
+  const sendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
 
     const date = new Date();
-    // const formattedDate: string = formatDate(date);
-    const messgaeIsSent = await createMessage(firstName, lastName, mail, message, date);
-
-    // console.log(
-    //   firstName,
-    //   lastName,
-    //   mail,
-    //   message,
-    //   formattedDate,
-    //   typeof formattedDate,
-    //   messgaeIsSent
-    // );
+    const messgaeIsSent = await postMessage(firstName, lastName, mail, message, date);
 
     if (messgaeIsSent) {
       toast({
@@ -106,7 +94,7 @@ export default function Form() {
               </div>
             </div>
           </div>
-          <form className="justify-center flex items-center" onSubmit={sendForm}>
+          <form className="justify-center flex items-center" onSubmit={sendMessage}>
             <div className="rounded-md w-3/4 flex flex-col border p-8 gap-4">
               <p>Nous contacter</p>
               <div className="grid w-full items-center gap-1">

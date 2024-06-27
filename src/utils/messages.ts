@@ -1,6 +1,21 @@
 import { formatDate } from "@/utils/date";
 
-export const createMessage = async (
+export const fetchMessages = async () => {
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/messages`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    return;
+  }
+};
+
+export const postMessage = async (
   firstName: string,
   lastName: string,
   email: string,
@@ -29,17 +44,14 @@ export const createMessage = async (
   }
 };
 
-export const fetchMessages = async () => {
+export const deleteMessage = async (id: string) => {
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/messages`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/messages/${id}`, {
+      method: "DELETE"
     });
-    return await response.json();
+    return response.ok;
   } catch (error) {
     console.error(error);
-    return;
+    return false;
   }
 };

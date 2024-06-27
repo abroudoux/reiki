@@ -145,14 +145,14 @@ export default function TableMessages() {
   const [rowSelection, setRowSelection] = useState({});
   const [data, setData] = useState<Session[]>([]);
 
-  const fetchMessagesData = async () => {
+  const getMessages = async () => {
     const data = await fetchMessages();
     setData(data.messages);
     console.log("Fetched data: ", data);
   };
 
   useEffect(() => {
-    fetchMessagesData();
+    getMessages();
   }, []);
 
   const table = useReactTable({

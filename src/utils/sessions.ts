@@ -1,5 +1,15 @@
 import { formatDate } from "@/utils/date";
 
+export const getSessions = async () => {
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/sessions`);
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    return;
+  }
+};
+
 export const createSession = async (
   firstName: string,
   lastName: string,
@@ -22,12 +32,14 @@ export const createSession = async (
   }
 };
 
-export const fetchSessions = async () => {
+export const deleteSession = async (id: string) => {
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/sessions`);
-    return await response.json();
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/sessions/${id}`, {
+      method: "DELETE"
+    });
+    return response.ok;
   } catch (error) {
     console.error(error);
-    return;
+    return false;
   }
 };

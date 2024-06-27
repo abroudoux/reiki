@@ -13,7 +13,7 @@ import {
   useReactTable
 } from "@tanstack/react-table";
 
-import { fetchSessions } from "@/utils/sessions";
+import { getSessions, deleteSession } from "@/utils/sessions";
 import { Session } from "@/utils/types";
 
 import { Button } from "@/components/ui/button";
@@ -140,7 +140,7 @@ export default function TableSessions() {
   const [data, setData] = useState<Session[]>([]);
 
   const fetchSessionsData = async () => {
-    const data = await fetchSessions();
+    const data = await getSessions();
     console.log(data);
     setData(data.sessions);
   };
