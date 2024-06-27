@@ -147,9 +147,13 @@ export default function TableMessages() {
 
   const fetchMessagesData = async () => {
     const data = await fetchMessages();
-    setData(data);
+    setData(data.messages);
     console.log("Fetched data: ", data);
   };
+
+  useEffect(() => {
+    fetchMessagesData();
+  }, []);
 
   const table = useReactTable({
     data: data,
@@ -228,7 +232,7 @@ export default function TableMessages() {
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No results.
+                  Pas de résultats trouvés.
                 </TableCell>
               </TableRow>
             )}

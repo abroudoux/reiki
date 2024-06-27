@@ -141,8 +141,13 @@ export default function TableSessions() {
 
   const fetchSessionsData = async () => {
     const data = await fetchSessions();
-    setData(data);
+    console.log(data);
+    setData(data.sessions);
   };
+
+  useEffect(() => {
+    fetchSessionsData();
+  }, []);
 
   const table = useReactTable({
     data: data,
@@ -221,7 +226,7 @@ export default function TableSessions() {
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No results.
+                  Pas de sessions trouvées.
                 </TableCell>
               </TableRow>
             )}

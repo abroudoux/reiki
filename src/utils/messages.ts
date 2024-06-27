@@ -31,7 +31,12 @@ export const createMessage = async (
 
 export const fetchMessages = async () => {
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/messages`);
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/messages`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
     return await response.json();
   } catch (error) {
     console.error(error);
