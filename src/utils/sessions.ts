@@ -11,6 +11,11 @@ export const getSessions = async () => {
 };
 
 export const getSession = async (id: string) => {
+  if (!id) {
+    console.error("No session ID provided");
+    return;
+  }
+
   try {
     const response = await fetch(`${import.meta.env.VITE_API_URL}/sessions/${id}`);
     return await response.json();
